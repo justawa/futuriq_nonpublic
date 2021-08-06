@@ -59,7 +59,7 @@
                             <video autoplay="true" id="videoElement"></video>
                             </div>
                             {{-- <video controls></video> --}}
-                            <video id="vid2" controls></video>
+                            {{-- <video id="vid2" controls></video> --}}
                           </div>
                           <div class="form-group">
                             <button type="button" class="btn btn-primary btn-sm" id="openRecorder">Start Video</button>
@@ -119,7 +119,7 @@
     const openRecorder = document.querySelector("#openRecorder");
     // const closeRecorder = document.querySelector("#closeRecorder");
     let video = document.querySelector('#videoElement');
-    let vidSave = document.querySelector('#vid2');
+
     openRecorder.addEventListener("click", openVideoRecording);
     // closeRecorder.addEventListener("click", closeVideoRecording);
 
@@ -188,28 +188,27 @@
           let mediaRecorder = new MediaRecorder(mediaStreamObj);
           let chunks = [];
 
-           start.addEventListener('click', (ev) => {
+          start.addEventListener('click', (ev) => {
               mediaRecorder.start();
               console.log(mediaRecorder.state);
-           });
-          
-           stop.addEventListener('click', (ev) => {
+          });
+          stop.addEventListener('click', (ev) => {
+            //   mediaRecorder.ondataavailable()
               mediaRecorder.stop();
               console.log(mediaRecorder.state);
-           });
-          
-           mediaRecorder.ondataavailable = (ev) => {
-               chunks.push(ev.data);
-           }
+          });
+        //   mediaRecorder.ondataavailable = (ev) => {
+        //       chunks.push(ev.data);
+        //   }
         
            mediaRecorder.onstop = async (ev) => {
-           let blob = new Blob(chunks, {'type' : 'video/mp4;'});
+            let blob = new Blob(chunks, {'type' : 'video/mp4;'});
             console.log("Blog Data==>", blob);
             chunks = [];
             await uploadFile(blob);
-            let videoURL = window.URL.createObjectURL(blob);
+            // let videoURL = window.URL.createObjectURL(blob);
             // console.log("video Url==>", videoURL);
-            vidSave.src = videoURL;
+            // vidSave.src = videoURL;
             // console.log("video url===>", vidSave.src);
           }
       })
