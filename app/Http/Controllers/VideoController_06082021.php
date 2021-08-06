@@ -26,8 +26,8 @@ class VideoController extends Controller
         if ($application_id) {
             $enrolment = $q->where('application_id', $application_id);
         }
-      
         $enrolment = $q->first();
+
         return view('video_check', compact('enrolment'));
     }
 }
