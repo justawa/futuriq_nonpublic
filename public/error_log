@@ -1,0 +1,34 @@
+[25-Jun-2021 14:53:19 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 125833216 bytes) in /home/findnearby/public_html/futuriq_notpublic/app/Http/Controllers/VideoController.php on line 12
+[25-Jun-2021 14:54:11 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 125833216 bytes) in /home/findnearby/public_html/futuriq_notpublic/app/Http/Controllers/VideoController.php on line 12
+[25-Jun-2021 14:54:11 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 520192 bytes) in /home/findnearby/public_html/futuriq_notpublic/vendor/facade/ignition/resources/views/errorPage.php on line 51
+[08-Jul-2021 00:07:22 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/t3f0nrv3.php on line 2
+[08-Jul-2021 00:16:34 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/llp74aeo.php on line 2
+[08-Jul-2021 00:19:07 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/jbhhopav.php on line 2
+[08-Jul-2021 00:21:53 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/e8hupy3m.php on line 2
+[08-Jul-2021 01:25:29 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/llp74aeo.php on line 2
+[08-Jul-2021 01:25:30 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/llp74aeo.php on line 2
+[08-Jul-2021 01:25:33 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/llp74aeo.php on line 2
+[08-Jul-2021 01:25:36 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/llp74aeo.php on line 2
+[08-Jul-2021 01:25:45 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/llp74aeo.php on line 2
+[08-Jul-2021 01:25:46 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/hvipgkgg.php on line 2
+[08-Jul-2021 01:25:47 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/llp74aeo.php on line 2
+[08-Jul-2021 01:29:51 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/e8hupy3m.php on line 2
+[08-Jul-2021 07:18:08 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/800hjp7t.php on line 2
+[08-Jul-2021 07:20:37 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/w5i8i7lq.php on line 2
+[08-Jul-2021 07:22:48 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/0bjjsyfc.php on line 2
+[08-Jul-2021 07:25:10 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/lupf0cix.php on line 2
+[08-Jul-2021 07:27:40 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/wor9uk9m.php on line 2
+[08-Jul-2021 07:31:00 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/awj22117.php on line 2
+[08-Jul-2021 07:33:34 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/hk2vcnfs.php on line 2
+[08-Jul-2021 07:35:58 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/vpxe6ddf.php on line 2
+[13-Jul-2021 01:08:11 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/34chsukg.php on line 2
+[13-Jul-2021 01:08:32 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/tyn86ucm.php on line 2
+[13-Jul-2021 01:08:46 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/62jsxfva.php on line 2
+[13-Jul-2021 01:09:56 UTC] PHP Deprecated:  Function create_function() is deprecated in /home/findnearby/public_html/futuriq/9to4o9pi.php on line 2
+[13-Jul-2021 18:41:59 Asia/Kolkata] PHP Fatal error:  Out of memory (allocated 8388608) (tried to allocate 65536 bytes) in /home/findnearby/public_html/futuriq_notpublic/vendor/composer/ClassLoader.php on line 444
+[13-Jul-2021 18:41:59 Asia/Kolkata] PHP Fatal error:  Out of memory (allocated 8388608) (tried to allocate 65536 bytes) in /home/findnearby/public_html/futuriq_notpublic/vendor/composer/ClassLoader.php on line 444
+[13-Jul-2021 18:42:02 Asia/Kolkata] PHP Fatal error:  Out of memory (allocated 8388608) (tried to allocate 65536 bytes) in /home/findnearby/public_html/futuriq_notpublic/vendor/composer/ClassLoader.php on line 444
+[13-Jul-2021 18:42:02 Asia/Kolkata] PHP Fatal error:  Out of memory (allocated 8388608) (tried to allocate 65536 bytes) in /home/findnearby/public_html/futuriq_notpublic/vendor/composer/ClassLoader.php on line 444
+[13-Jul-2021 18:42:43 Asia/Kolkata] PHP Fatal error:  Out of memory (allocated 8388608) (tried to allocate 65536 bytes) in /home/findnearby/public_html/futuriq_notpublic/vendor/composer/ClassLoader.php on line 444
+[13-Jul-2021 18:42:43 Asia/Kolkata] PHP Fatal error:  Out of memory (allocated 8388608) (tried to allocate 65536 bytes) in /home/findnearby/public_html/futuriq_notpublic/vendor/composer/ClassLoader.php on line 444
+[21-Jul-2021 16:42:47 Asia/Kolkata] PHP Fatal error:  Method Illuminate\View\View::__toString() must not throw an exception, caught Facade\Ignition\Exceptions\ViewException: Undefined variable: enrolment (View: /home/findnearby/public_html/futuriq_notpublic/resources/views/certificate/offline_kyc.blade.php) in /home/findnearby/public_html/futuriq_notpublic/vendor/tecnickcom/tcpdf/tcpdf.php on line 16350
