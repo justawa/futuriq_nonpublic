@@ -16,7 +16,7 @@
     -webkit-transition: width 0.25s ease, background 0.25s ease;
     -moz-transition: width 0.25s ease, background 0.25s ease;
     -ms-transition: width 0.25s ease, background 0.25s ease;
-    background: #b9545f;
+    background: #23d10d;
     width: 270px;
     height: 63px; }
     .navbar.default-layout .navbar-brand-wrapper .navbar-brand {
@@ -134,7 +134,7 @@
 /* Sidebar */
 .sidebar {
   min-height: calc(100vh - 63px);
-  background: linear-gradient(to top, #b9545f, #b9545f);
+  background: linear-gradient(to top, #00aae9, #00aae9);
   font-family: "roboto", sans-serif;
   padding: 0;
   width: 270px;
@@ -280,7 +280,7 @@
         display: block; }
     
     .sidebar > .nav:not(.sub-menu) > .nav-item:hover:not(.nav-profile):not(.hover-open) > .nav-link:not([aria-expanded="true"]) {
-      background: #88323b;
+      background: #00aae9;
       }
       
 
@@ -423,7 +423,7 @@
 .btn-form {
     width: auto;
     padding: 10px 40px;
-    background: linear-gradient(180deg, #b74f51, #793032);
+    background: linear-gradient(180deg, #00aae9, #5317f8);
     border: 0px;
     color: #fff; display:block; text-align:center;
 }
@@ -433,7 +433,7 @@
 .btn-view {
     width: auto;
     padding: 7px 10px;
-    background: linear-gradient(180deg, #b74f51, #793032);
+    background: linear-gradient(180deg, #00aae9, #4413f5);
     border: 0px;
     color: #fff; display:block; text-align:center;
 }
@@ -455,7 +455,7 @@
 .btn-record {
     width: auto;
     padding: 10px 20px;
-    background: linear-gradient(180deg, #b74f51, #793032);
+    background: linear-gradient(180deg, #00aae9, #0d09e4);
     border: 0px;
     color: #fff;
 }
@@ -493,7 +493,7 @@ input[type="radio"]+label:before {
 
 /* appearance for checked radiobutton */
 input[type="radio"]:checked + label:before {
-  background-color: #bd0c06;
+  background-color: #00aae9;
 }
 
 /* optional styles, I'm using this for centering radiobuttons */
@@ -504,21 +504,21 @@ label {
 
 
 input[type=file]::-webkit-file-upload-button {
-  border: 0px solid #b74f51;
+  border: 0px solid #00aae9;
  color:#fff;
-  background-color:#b74f51;
+  background-color:#1613e4;
   transition: 1s;
 }
 
 input[type=file]::file-selector-button {
-  border: 0px solid #b74f51;
+  border: 0px solid #00aae9;
   color:#fff;
-  background-color: #b74f51;
+  background-color: #00aae9;
   transition: 1s;
 }
 
 input[type=file]::-webkit-file-upload-button:hover {
-  background-color: #b74f51;
+  background-color: #00aae9;
   border: 0px solid #b74f51;color:#fff;
 }
 

@@ -110,10 +110,10 @@ class EnrolmentController extends Controller
         // $tcpdf->writeHTML($html, true, false, true, false, '');
         // $tcpdf->Output('enrolment.pdf');
 
-        $pdf = DOMPDF::loadView('certificate.offline_kyc', $enrolment);
-        $pdf->save(storage_path().'_filename.pdf');
-        return $pdf->download('enrolment.pdf');
-        // return view('certificate.offline_kyc', compact('enrolment'));
+        // $pdf = DOMPDF::loadView('certificate.offline_kyc', $enrolment);
+        // $pdf->save(storage_path().'_filename.pdf');
+        // return $pdf->download('enrolment.pdf');
+        return view('certificate.offline_kyc', compact('enrolment'));
     }
 
     public function video_verification_store(Request $request)
