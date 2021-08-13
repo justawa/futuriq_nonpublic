@@ -118,8 +118,9 @@
 				<hr>
                 <div class="mb-4">
                     <div class="row mb-3">
-                        {{-- <div class="col-lg-4"> Certification Class</div> --}}
+                        <div class="col-lg-4"> Certification Type</div>
                         <div class="col-lg-8">
+                            : <span>{{ $org->certification_type}}</span>
                           <!----- <select class="selectpicker form-control">
 							    <option>Select</option>
                                 <option>Class 1</option>
@@ -129,8 +130,9 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        {{-- <div class="col-lg-4"> User Type </div> --}}
+                        <div class="col-lg-4"> Validity  </div>
                         <div class="col-lg-8">
+                            : <span>{{ $org->validity}}</span> 
                           <!-----  <select class="selectpicker form-control">
                                 <option>Select</option>
                                 <option>Individual</option>
@@ -138,8 +140,10 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        {{-- <div class="col-lg-4"> Vaildity </div> --}}
+                        <div class="col-lg-4"> Organization Type </div>
                         <div class="col-lg-8">
+                            : <span>{{ $org->orgtype}}</span> 
+                            
                            <!----- <select class="selectpicker form-control">
                                 <option>Select</option>
                                 <option>1 Year</option>
@@ -148,8 +152,10 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        {{-- <div class="col-lg-4"> Nationality </div> --}}
+                        <div class="col-lg-4"> GST No </div>
                         <div class="col-lg-8">
+                            : <span>{{ $org->gstno}}</span> 
+
                         <!-----    <select class="selectpicker form-control">
                                 <option>Select</option>
                                 <option>India</option>

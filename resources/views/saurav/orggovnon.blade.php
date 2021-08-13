@@ -41,7 +41,7 @@
           <ul class="navbar-nav" style="float:left;" id="navbarNavDarkDropdown">
             <!--<li class="nav-item font-weight-semibold d-none d-lg-block">Quick Contact : 999 999 9999</li>-->
 			<li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{route('home')}}">
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
