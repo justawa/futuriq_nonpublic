@@ -25,7 +25,7 @@
                         <div class="col-md-4">
                           <div class="form-group">
                             <label>Application ID</label>
-                            <input type="text" class="form-control" placeholder="Application ID" name="application_id" />
+                            <input type="text" class="form-control" placeholder="Application ID" id="application_id" name="application_id" />
                             <p id="application_id_error"></p>
                           </div>
                           <div class="form-group">
@@ -55,19 +55,25 @@
                         <div class="col-4 align-self-center">
                           <p class="mb-2 text-center">Video Recording Left 00:<span id="countdowntimer">22</span>seconds</p>
                           <div class="form-group">
-                            <div class="embed-responsive embed-responsive-1by1">
-                            <video autoplay="true" id="videoElement"></video>
+                            <div id="recordVideo" class="embed-responsive embed-responsive-1by1">
+                              <video id="videoElement" controls></video>
                             </div>
-                            {{-- <video controls></video> --}}
-                            <video id="vid2" controls></video>
+                            <div id="viewVideo" class="embed-responsive embed-responsive-1by1">
+                              <video id="vid2" controls></video>
+                            </div>  
                           </div>
                           <div class="form-group">
-                            <button type="button" class="btn btn-primary btn-sm" id="openRecorder">Start Video</button>
-                            <button type="button" class="btn btn-primary btn-sm" id="btnStart">Start Recording</button>
-                            <button type="button" class="btn btn-primary btn-sm" id="btnStop">Stop Recording</button>
-                             <ul id='ul'>
-                                Downloads List:
-                              </ul>
+                            <button type="button" style="float:left;" class="btn btn-primary ml-3 mr-5" id="btnStart" disabled>Record</button>
+                            <!-- <button type="button" style="float:left;" class="btn btn-primary mr-3" id="btnStop" >Stop</button> -->
+                            <button type="button" style="float:left;" class="btn btn-primary mr-5" id="btnView" disabled>View</button>
+                            <form method="POST" style="float:left;" action="{{ route('video.verification') }}">
+                              @csrf
+                              <input type="hidden" name="verification_application_id" id="verification_application_id" />
+                              <input type="hidden" name="verfication_dob" id="verfication_dob" />
+                              <input type="hidden" name="verification_video_url" id="verification_video_url" />
+                              <input type="hidden" name="verification_video_hash" id="verification_video_hash" />
+                              <button class="btn btn-primary" id="verification_form_submit" disabled>Submit</button>
+                            </form>
                           </div>
                         </div>
                       </div>
@@ -79,14 +85,6 @@
                         <li class="list-group-item">My date of birth is <strong id="applicant_dob"></strong></li>
                         <li class="list-group-item">I have applied for a Futuriq digital signature</li>
                       </ul>
-
-                      <form method="POST" action="{{ route('video.verification') }}">
-                        @csrf
-                        <input type="hidden" name="verification_application_id" id="verification_application_id" />
-                        <input type="hidden" name="verfication_dob" id="verfication_dob" />
-                        <input type="hidden" name="verification_video_url" id="verification_video_url" />
-                        <button class="btn btn-primary" id="verification_form_submit" disabled>Submit</button>
-                      </form>
                     </div>
                   {{-- </form> --}}
                 </div>
@@ -116,31 +114,18 @@
 </script> --}}
 
 <script>
-    const openRecorder = document.querySelector("#openRecorder");
-    // const closeRecorder = document.querySelector("#closeRecorder");
+
+    document.getElementById('recordVideo').style.display = "block";
+    document.getElementById('viewVideo').style.display = "none";
+    openVideoRecording();
     let video = document.querySelector('#videoElement');
     let vidSave = document.querySelector('#vid2');
-    openRecorder.addEventListener("click", openVideoRecording);
-    // closeRecorder.addEventListener("click", closeVideoRecording);
-
-    // function closeVideoRecording() {
-    //   // openRecorder.removeEventListener(null, openVideoRecording);
-    //   localStream.getVideoTracks()[0].stop();
-    //   video.src = '';
-    // }
-
+    
     function openVideoRecording() {
-      document.getElementById('btnStart').removeAttribute("disabled");
-      timer();
       let constraintObj = {
           audio: true,
           video: true
       };
-      // {
-      //         facingMode: "user",
-      //         width: {min:150 , ideal:250, max:350},
-      //         height: {min:100 , ideal:200, max:300},
-      //     }
 
       //handle older browsers that might implement getUserMedia in some way
       if(navigator.mediaDevices === undefined){
@@ -176,69 +161,80 @@
             //old version
             video.src = window.URL.createObjectURL(mediaStreamObj);
           }
-
-          // video.onloademetadata = function(ev){
-          //     //show in the video element what is being captured by webcam
-          //     video.play();
-          // };
-
           //add listeners for saving video/audio
-          let start = document.getElementById('btnStart');
           let stop = document.getElementById('btnStop');
+          let submit = document.getElementById('verification_form_submit');
+          let start = document.getElementById('btnStart');
+          start.disabled = false;
+          let view = document.getElementById('btnView');
           let mediaRecorder = new MediaRecorder(mediaStreamObj);
           let chunks = [];
 
            start.addEventListener('click', (ev) => {
+              video.play();
               mediaRecorder.start();
-              console.log(mediaRecorder.state);
+              timer(video, mediaRecorder, chunks);
            });
+
+           view.addEventListener('click', (ev) => {
+              vidSave.play();
+           }); 
+
+          //  stop.addEventListener('click', (ev) => {
+          //     mediaRecorder.stop();
+          //     console.log(mediaRecorder.state);
+          //  });
           
-           stop.addEventListener('click', (ev) => {
-              mediaRecorder.stop();
-              console.log(mediaRecorder.state);
-           });
-          
-           mediaRecorder.ondataavailable = (ev) => {
-               chunks.push(ev.data);
-           }
-        
-           mediaRecorder.onstop = async (ev) => {
-           let blob = new Blob(chunks, {'type' : 'video/mp4;'});
-            console.log("Blog Data==>", blob);
-            chunks = [];
-            await uploadFile(blob);
-            let videoURL = window.URL.createObjectURL(blob);
-            // console.log("video Url==>", videoURL);
-            vidSave.src = videoURL;
-            // console.log("video url===>", vidSave.src);
-          }
+           
       })
       .catch(function(err){
           console.log(err.name, err.message);
       });
     }
 
-    function timer() {
+    function timer(video, mediaRecorder, chunks) {
       var timeleft = 22;
       var downloadTimer = setInterval(function(){
       timeleft--;
       document.getElementById("countdowntimer").textContent = timeleft;
-      if(timeleft <= 0)
-        clearInterval(downloadTimer);
+        if(timeleft <= 0){
+            video.pause();
+            mediaRecorder.stop();
+            mediaRecorder.ondataavailable = (ev) => {
+               chunks.push(ev.data);
+            }
+            mediaRecorder.onstop = async (ev) => {
+              let blob = new Blob(chunks, {'type' : 'video/mp4;'});
+              console.log("Blog Data==>", blob);
+              chunks = [];
+              await uploadFile(blob);
+              let videoURL = window.URL.createObjectURL(blob);
+              vidSave.src = videoURL;
+            }
+            clearInterval(downloadTimer);
+            document.getElementById('recordVideo').style.display = "none";
+            document.getElementById('viewVideo').style.display = "block";
+            document.getElementById('btnStart').disabled = true;
+            document.getElementById('btnView').disabled = false;
+            document.getElementById('verification_form_submit').disabled = false;
+        }    
       },1000);
     }
     
     
     function uploadFile(blob) {
+        var application_id = document.getElementById('application_id').value;
         var file = new File([blob], 'msr-' + (new Date).toISOString().replace(/:|\./g, '-') + '.webm', {
             type: 'video/webm'
         });
-    
+        const hashHexVideo = getHash("SHA-256", new Blob([file]));
         // create FormData
         var formData = new FormData();
+        formData.append('application_id', application_id);
         formData.append('_token', "{{ csrf_token() }}");
         formData.append('video-filename', file.name);
         formData.append('video-blob', file);
+        formData.append('video_file_hash', hashHexVideo);
         makeXMLHttpRequest('{{ route("video.upload") }}', formData, function() {
             var downloadURL = 'https://futuriq.in/videos/' + file.name;
             console.log('File uploaded to this path:', downloadURL);
@@ -251,9 +247,8 @@
             if (request.readyState == 4 && request.status == 200) {
                 callback(location.href + request.responseText);
                 console.log("res", request.responseText);
-
-
                 document.getElementById('verification_video_url').value = request.responseText;
+                document.getElementById('verification_video_hash').value = hashHexVideo;
                 document.getElementById('verification_form_submit').disabled = false;
             }
         };
@@ -261,6 +256,27 @@
         request.send(data);
     }
     
+     /**
+      * @param {"SHA-1"|"SHA-256"|"SHA-384"|"SHA-512"} algorithm https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+      * @param {string|Blob} data
+    **/
+    async function getHash(algorithm, data) {
+
+          const main = async (msgUint8) => { // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#converting_a_digest_to_a_hex_string
+            const hashBuffer = await crypto.subtle.digest(algorithm, msgUint8)
+            const hashArray = Array.from(new Uint8Array(hashBuffer))
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+          }
+
+          if (data instanceof Blob) {
+            const arrayBuffer = await data.arrayBuffer()
+            const msgUint8 = new Uint8Array(arrayBuffer)
+            return await main(msgUint8)
+          }
+          const encoder = new TextEncoder()
+          const msgUint8 = encoder.encode(data)
+          return await main(msgUint8)
+    }
     
 </script>
 @endsection
