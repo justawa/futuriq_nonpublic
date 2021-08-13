@@ -1,15 +1,13 @@
 @extends('layouts.dashboard')
-
-
 @section('page-heading', 'Dashboard')
 
-@section('quick-side-section')
+{{-- @section('quick-side-section')
 <div class="quick-link-wrapper w-100 d-md-flex flex-md-wrap">
   <ul class="quick-links ml-auto">
     <li><a href="#">Login Time : 12:00 AM</a></li>
   </ul>
 </div>
-@endsection
+@endsection --}}
 
 @section('content')
 <div class="row mt-3">

@@ -21,8 +21,9 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-//require __DIR__.'/../futuriq_notpublic/vendor/autoload.php';
-require '/var/www/html/justconsult/futuriq/futuriq_nonpublic/vendor/autoload.php';
+// require __DIR__.'/../futuriq_notpublic/vendor/autoload.php';
+// require __DIR__.'justc/Git/futuriq/futuriq_nonpublic/vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,7 @@ require '/var/www/html/justconsult/futuriq/futuriq_nonpublic/vendor/autoload.php
 */
 
 //$app = require_once __DIR__.'/../futuriq_notpublic/bootstrap/app.php';
-$app = require_once '/var/www/html/justconsult/futuriq/futuriq_nonpublic/bootstrap/app.php';
+$app = require_once __DIR__.'/../bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------

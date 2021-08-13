@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrgEnrolmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +57,21 @@ Route::get('/get-certificate', 'ServerRequestController@getCertificate');
 // api
 Route::get('/enrolment/application_id', 'EnrolmentController@getEnrolmentByApplicationId')->name('enrolment.by.application.id');
 Route::get('/enrolment/application_id_and_dob', 'EnrolmentController@getEnrolmentByApplicationIdAndDob')->name('enrolment.by.application.id.and.dob');
+
+
+// saurav
+Route::view('/ind', 'saurav.ind')->name('saurav.ind');
+Route::view('/orggov', 'saurav.orggov')->name('saurav.orggov');
+Route::view('/orggov2', 'saurav.orggov2')->name('saurav.orggov2');
+Route::get('orggovnon', 'OrgEnrolmentController@create')->name('saurav.orggovnon');
+
+Route::post('orggovnon', 'OrgEnrolmentController@store')->name('saurav.orggovnon');
+// Route::view('/orggovnon', 'saurav.orggovnon')->name('saurav.orggovnon');
+Route::view('/orggovnon2', 'saurav.orggovnon2')->name('saurav.orggovnon2');
+Route::view('/orggovdgst', 'saurav.orggovdgst')->name('saurav.orggovdgst');
+Route::view('/orggovdgst2', 'saurav.orggovdgst2')->name('saurav.orggovdgst2');
+Route::any('/last', [OrgEnrolmentController::class, 'store'])->name('saurav.last');
+// Route::view('/last', 'saurav.last')->name('saurav.last');
+
+
+
