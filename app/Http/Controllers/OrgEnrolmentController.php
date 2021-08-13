@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\orgenrolment;
+use App\Orgenrolment;
 use DB;
 
 
-class orgenrolmentcontroller extends Controller
+class OrgEnrolmentController extends Controller
 {
     public function create(){
         return view('saurav.orggovnon');
@@ -15,7 +15,7 @@ class orgenrolmentcontroller extends Controller
 
 
     public function store(Request $request)
-    {   $orgenrolment = new orgenrolment;
+    {   $orgenrolment = new Orgenrolment;
         $orgenrolment->certification_type = $request->input('certification_type');
         $orgenrolment->validity = $request->input('validity');
         $orgenrolment->orgtype = $request->input('orgtype');
@@ -77,15 +77,15 @@ class orgenrolmentcontroller extends Controller
 
         $orgenrolment->save();
 
-        $org=orgenrolment::latest()->first();
+        $org = Orgenrolment::latest()->first();
 
            return view('saurav.last' , compact('org'));
     }
 
-    public function show(orgenrolment $org)
+    public function show(Orgenrolment $org)
     {
         // return DB::table('orgenrolments')->order_by('upload_time', 'desc')->first();
-        $org=orgenrolment::latest()->first();
+        $org = Orgenrolment::latest()->first();
         return view('saurav.last' , compact('org'));
     }
 }

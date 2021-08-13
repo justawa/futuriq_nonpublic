@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\orgenrolmentcontroller;
+use App\Http\Controllers\OrgEnrolmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,14 +63,14 @@ Route::get('/enrolment/application_id_and_dob', 'EnrolmentController@getEnrolmen
 Route::view('/ind', 'saurav.ind')->name('saurav.ind');
 Route::view('/orggov', 'saurav.orggov')->name('saurav.orggov');
 Route::view('/orggov2', 'saurav.orggov2')->name('saurav.orggov2');
-Route::get('orggovnon', 'orgenrolmentcontroller@create')->name('saurav.orggovnon');
+Route::get('orggovnon', 'OrgEnrolmentController@create')->name('saurav.orggovnon');
 
-Route::post('orggovnon', 'orgenrolmentcontroller@store')->name('saurav.orggovnon');
+Route::post('orggovnon', 'OrgEnrolmentController@store')->name('saurav.orggovnon');
 // Route::view('/orggovnon', 'saurav.orggovnon')->name('saurav.orggovnon');
 Route::view('/orggovnon2', 'saurav.orggovnon2')->name('saurav.orggovnon2');
 Route::view('/orggovdgst', 'saurav.orggovdgst')->name('saurav.orggovdgst');
 Route::view('/orggovdgst2', 'saurav.orggovdgst2')->name('saurav.orggovdgst2');
-Route::any('/last', [orgenrolmentcontroller::class, 'store'])->name('saurav.last');
+Route::any('/last', [OrgEnrolmentController::class, 'store'])->name('saurav.last');
 // Route::view('/last', 'saurav.last')->name('saurav.last');
 
 

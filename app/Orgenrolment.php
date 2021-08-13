@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class orgenrolment extends Model
+class Orgenrolment extends Model
 {
     //
 }
