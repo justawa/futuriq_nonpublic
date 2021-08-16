@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\EnrolmentRequest;
+use GuzzleHttp\Client;
 
 use App\Enrolment;
 use DOMPDF;
@@ -118,14 +119,35 @@ class EnrolmentController extends Controller
 
     public function video_verification_store(Request $request)
     {
-        $enrolment = Enrolment::where(['application_id' => $request->verification_application_id, 'birthday' => $request->verfication_dob])->first();
-        $enrolment->video_file = $request->verification_video_url;
+ 
+        $client = new \GuzzleHttp\Client(['verify' => false ]);
 
-        if ($enrolment->save()) {
-            return redirect()->back()->with('success', 'Verification saved successfully');
-        } else {
-            return redirect()->back()->with('failure', 'Failed to save verification');
-        }
+        $url = "http://14.98.56.1:8000/timestamp";
+
+        // $myBody['hashAlgorithm'] = "SHA256";
+        // $myBody['hashedMessage'] = "a74fa57f7f80e93fe7321afbff2fb0572ce34cea206899667dfc9a695f48ecea";
+        // $myBody['certRequired'] = false;
+
+        $request = $client->post($url,  
+        array(
+            'form_params' => array(
+                'hashAlgorithm' => 'SHA256',
+                'hashedMessage' => 'a74fa57f7f80e93fe7321afbff2fb0572ce34cea206899667dfc9a695f48ecea',
+                'certRequired' => false
+                )
+            )
+        );
+
+        $response = $request->send();
+        dd($response);
+        // $enrolment = Enrolment::where(['application_id' => $request->verification_application_id, 'birthday' => $request->verfication_dob])->first();
+        // $enrolment->video_file = $request->verification_video_url;
+
+        // if ($enrolment->save()) {
+        //     return redirect()->back()->with('success', 'Verification saved successfully');
+        // } else {
+        //     return redirect()->back()->with('failure', 'Failed to save verification');
+        // }
     }
 
     public function getEnrolmentByApplicationIdAndDob(Request $request)

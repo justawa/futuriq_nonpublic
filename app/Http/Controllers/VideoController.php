@@ -16,10 +16,13 @@ class VideoController extends Controller
         $videoPath = '';
         if($request->hasFile('video-blob')){
             $videoName = $request->file('video-blob')->getClientOriginalName();
-            $videoPath = $request->file('video-blob')->storeAs('videos', $videoName, 'public');
-            Enrolment::update(['video_file' => $videoPath, 'video_file_hash' => $videoFileHash])->where('application_id', $application_id);
+            $videoPath = $request->file('video-blob')->storeAs('videos', $videoName, 'public'); 
+            $q1 = Enrolment::where('application_id',$application_id)->first();
+            $q1->video_file = $videoName;
+            $q1->video_file_hash = $videoFileHash;
+            $q1->save();
         }
-        return $videoPath;
+        return $videoFileHash;
     }
 
     public function check(Request $request, $application_id=null)

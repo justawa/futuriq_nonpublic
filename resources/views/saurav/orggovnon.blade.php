@@ -51,6 +51,7 @@
               </a>
 			  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
           <li><a class="dropdown-item" href="{{route('saurav.ind')}}">Ind </a></li>
+          {{-- <li><a class="dropdown-item" href="{{route('saurav.orggov')}}">org</a></li> --}}
           <li><a class="dropdown-item" href="{{route('saurav.orggovnon')}}">org </a></li>  
           <li><a class="dropdown-item" href="#">Manage eKyc </a></li>
           </ul>
@@ -211,7 +212,11 @@
 			    
                     <div class="card myButton">
                       <div class="card-body">
-						<h5>Enrolment of Applicant</h5>
+
+                     <h2> <a href="{{ url()->previous() }}">&#8249;</a> </h2>
+                        
+                        <h5>Enrolment of Applicant</h5>
+						
                         <div class="row mt-3 mb-3">
 						<div class="col-lg-12">
                           <div class="form-check-inline mb-3">
@@ -250,6 +255,8 @@
 
                     <div class="card same mt-3 mb-3 auth-sig">
                       <div class="card-body">
+                     <h2> <a href="{{ url()->previous() }}">&#8249;</a> </h2>
+
 						<h5>Enrolment of Authorized signatory</h5>
                         <div class="row mt-3 mb-3">
                           <div class="col-lg-12">
@@ -271,6 +278,7 @@
 						</div>
 						<div class="existing box">
 						<div class="row mt-3 mb-3">
+
                           <div class="col-lg-4"> Enter Ekyc Account Id </div>
                           <div class="col-lg-8">
                             <input type="text" class="form-control" name="ekycid" placeholder="@username ">
@@ -342,6 +350,8 @@
                       <div class="card-body">
 					  
 					  <div class="row">
+              <h2> <a href="{{ url()->previous() }}">&#8249;</a> </h2>
+
                           <div class="col-lg-12"><h5> New User</h5> 
 						  <hr>
 						  </div>
