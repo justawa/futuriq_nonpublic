@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\EnrolmentRequest;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Storage;
 
 use App\Enrolment;
 use DOMPDF;
@@ -96,6 +98,21 @@ class EnrolmentController extends Controller
         return view('enrolment.completed-steps', compact('enrolment'));
     }
 
+    public function getAllEnrolment(Request $request)
+    {
+        $enrolments = Enrolment::get();
+        return view('enrolment.allList', compact('enrolments'));
+    }
+
+    public function change_status($id,$status)
+    {
+        $enrol = Enrolment::find($id);
+        $enrol->status = $status;
+        $enrol->save();
+        $enrolments = Enrolment::get();
+        return view('enrolment.allList' , compact('enrolments'));
+    }
+
     public function get_offline_kyc(Request $request, $application_id)
     {
         $enrolment = Enrolment::where(['application_id' => $application_id])->first();
@@ -118,8 +135,25 @@ class EnrolmentController extends Controller
 
     public function video_verification_store(Request $request)
     {
+        // $client = new \GuzzleHttp\Client(['verify' => false ]);
+
+        // $url = "http://14.98.56.1:8000/timestamp";
+
+        // // $myBody['hashAlgorithm'] = "SHA256";
+        // // $myBody['hashedMessage'] = "a74fa57f7f80e93fe7321afbff2fb0572ce34cea206899667dfc9a695f48ecea";
+        // // $myBody['certRequired'] = false;
+
+        // $request = $client->post($url,  
+        // array(
+        //     'form_params' => array(
+        //         'hashAlgorithm' => 'SHA256',
+        //         'hashedMessage' => 'a74fa57f7f80e93fe7321afbff2fb0572ce34cea206899667dfc9a695f48ecea',
+        //         'certRequired' => false
+        //         )
+        //     )
+        // );
         $enrolment = Enrolment::where(['application_id' => $request->verification_application_id, 'birthday' => $request->verfication_dob])->first();
-        $enrolment->video_file = $request->verification_video_url;
+        $enrolment->video_file = $request->verification_video_hash;
 
         if ($enrolment->save()) {
             return redirect()->back()->with('success', 'Verification saved successfully');

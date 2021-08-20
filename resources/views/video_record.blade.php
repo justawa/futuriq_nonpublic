@@ -70,7 +70,6 @@
                               @csrf
                               <input type="hidden" name="verification_application_id" id="verification_application_id" />
                               <input type="hidden" name="verfication_dob" id="verfication_dob" />
-                              <input type="hidden" name="verification_video_url" id="verification_video_url" />
                               <input type="hidden" name="verification_video_hash" id="verification_video_hash" />
                               <button class="btn btn-primary" id="verification_form_submit" disabled>Submit</button>
                             </form>
@@ -223,32 +222,40 @@
     
     
     function uploadFile(blob) {
+        
         var application_id = document.getElementById('application_id').value;
+        var birthday = document.getElementById('birthday').value;
         var file = new File([blob], 'msr-' + (new Date).toISOString().replace(/:|\./g, '-') + '.webm', {
             type: 'video/webm'
         });
         const hashHexVideo = getHash("SHA-256", new Blob([file]));
-        // create FormData
-        var formData = new FormData();
-        formData.append('application_id', application_id);
-        formData.append('_token', "{{ csrf_token() }}");
-        formData.append('video-filename', file.name);
-        formData.append('video-blob', file);
-        formData.append('video_file_hash', hashHexVideo);
-        makeXMLHttpRequest('{{ route("video.upload") }}', formData, function() {
-            var downloadURL = 'https://futuriq.in/videos/' + file.name;
-            console.log('File uploaded to this path:', downloadURL);
-        });
+        hashHexVideo.then(function(result) {
+          const hashHexVideoValue = result;
+          console.log('video_file_hash==>', hashHexVideoValue);
+          // create FormData
+          var formData = new FormData();
+          formData.append('application_id', application_id);
+          formData.append('_token', "{{ csrf_token() }}");
+          formData.append('video-filename', file.name);
+          formData.append('video-blob', file);
+          formData.append('video_file_hash', hashHexVideoValue);
+          makeXMLHttpRequest('{{ route("video.upload") }}', formData, function() {
+              var downloadURL = 'https://futuriq.in/videos/' + file.name;
+                document.getElementById('verification_application_id').value = application_id;
+                document.getElementById('verfication_dob').value = birthday;
+              console.log('File uploaded to this path:', downloadURL);
+          });
+      });
     }
 
     function makeXMLHttpRequest(url, data, callback) {
+        console.log('Data===>', data);
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {
                 callback(location.href + request.responseText);
                 console.log("res", request.responseText);
-                document.getElementById('verification_video_url').value = request.responseText;
-                document.getElementById('verification_video_hash').value = hashHexVideo;
+                document.getElementById('verification_video_hash').value = request.responseText;
                 document.getElementById('verification_form_submit').disabled = false;
             }
         };

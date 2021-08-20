@@ -43,6 +43,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('enrolment/list', 'EnrolmentController@list')->name('enrolment.list');
     Route::get('enrolment/dsc-list', 'EnrolmentController@dsc_list')->name('enrolment.dsc.list');
     Route::get('enrolment/completed-steps/{application_id}', 'EnrolmentController@getEnrolmentByApplicationIdSteps')->name('enrolment.steps.completed');
+    Route::get('enrolment/all_list', 'EnrolmentController@getAllEnrolment')->name('enrolment.all_list');
+    Route::get('enrolment/change_status/{application_id}/{status}', 'EnrolmentController@change_status')->name('enrolment.change_status');
+
+
 
 
     //partner
