@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+Use \Carbon\Carbon;
 use App\Enrolment;
 
 class VideoController extends Controller
@@ -24,6 +24,7 @@ class VideoController extends Controller
         //     $q1->video_file_hash = $videoFileHash;
         //     $q1->save();
         // }
+        $datetime = Carbon::now()->format('Y-m-d H:m:s');
 
         if($request->hasFile('video-blob')) {
 
@@ -45,8 +46,12 @@ class VideoController extends Controller
                 //Store $filenametostore in the database
             }
 
+         $data['new'] = [
+                        'image_name' => $final_image_name,
+                        'datetime' => $datetime,
+                    ];
 
-        return $final_image_name;
+        return json_encode($data);
     }
 
     public function check(Request $request, $application_id=null)

@@ -51,9 +51,10 @@
                       </div>
                     </div>
                     <div id="step_2" style="display: none;">
-                      <div class="row justify-content-md-center">
-                        <div class="col-4 align-self-center">
-                          <p class="mb-2 text-center">Video Recording Left 00:<span id="countdowntimer">22</span>seconds</p>
+                      <div class="row justify-content-md-center middle">
+                        <div class="col-12 col-md-4 align-self-center">
+                          <p class="mb-2 text-center" id="before_view">Video Recording Left 00:<span id="countdowntimer">22</span>seconds</p>
+                          <p class="mb-2 text-center" id="after_view" style="visibility:hidden">Video Recorded at  <span id="date_time"></span></p>
                           <div class="form-group">
                             <div id="recordVideo" class="embed-responsive embed-responsive-1by1">
                               <video id="videoElement" controls></video>
@@ -92,6 +93,7 @@
     </div>
 </div>
 @endsection
+
 @section('script')
 {{-- <script>
   var record = document.querySelector("#startRecording");
@@ -112,8 +114,8 @@
   }
 </script> --}}
 
-<script>
 
+<script>
     document.getElementById('recordVideo').style.display = "block";
     document.getElementById('viewVideo').style.display = "none";
     openVideoRecording();
@@ -192,7 +194,7 @@
     }
 
     function timer(video, mediaRecorder, chunks) {
-      var timeleft = 22;
+      var timeleft = 2;
       var downloadTimer = setInterval(function(){
       timeleft--;
       document.getElementById("countdowntimer").textContent = timeleft;
@@ -253,15 +255,25 @@
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {
+              const obj = JSON.parse(request.responseText);
                 callback(location.href + request.responseText);
-                console.log("res", request.responseText);
-                document.getElementById('verification_video_hash').value = request.responseText;
+                console.log("res", obj.new.datetime);
+                document.getElementById('verification_video_hash').value = obj.new.image_name;
+                document.getElementById('date_time').textContent = obj.new.datetime;
                 document.getElementById('verification_form_submit').disabled = false;
             }
         };
         request.open('POST', url);
         request.send(data);
     }
+
+    let view = document.getElementById('btnView');
+  view.addEventListener('click', (ev) => {
+    document.getElementById('before_view').style.visibility = "hidden";
+    document.getElementById('after_view').style.visibility = "visible";
+    });
+    
+  
     
      /**
       * @param {"SHA-1"|"SHA-256"|"SHA-384"|"SHA-512"} algorithm https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
