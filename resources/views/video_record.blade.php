@@ -194,7 +194,7 @@
     }
 
     function timer(video, mediaRecorder, chunks) {
-      var timeleft = 2;
+      var timeleft =22;
       var downloadTimer = setInterval(function(){
       timeleft--;
       document.getElementById("countdowntimer").textContent = timeleft;
