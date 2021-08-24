@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/partner', 'PartnerController@store')->name('partner.store');
 });
 
+
 Route::get('/esign', 'EsignController@sendXml');
 
 Route::get('/get-certificate', 'ServerRequestController@getCertificate');

@@ -68,7 +68,7 @@ class EnrolmentController extends Controller
             'address_file' => $addressPath,
             'ekyc_token' => $token1,
             'dsc_token' => $token2,
-            'application_id' => $application_id
+            'application_id' => $application_id,
         ]);
         return redirect()->route('enrolment.authentication', [$token1, $token2]);
     }

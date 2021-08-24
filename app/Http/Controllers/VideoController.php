@@ -16,14 +16,7 @@ class VideoController extends Controller
         $application_id = $request->application_id;
         $videoFileHash = $request->video_file_hash;
         $videoPath = '';
-        // if($request->hasFile('video-blob')){
-        //     $videoName = $request->file('video-blob')->getClientOriginalName();
-        //     $videoPath = $request->file('video-blob')->storeAs('videos', $videoName, 'public'); 
-        //     $q1 = Enrolment::where('application_id',$application_id)->first();
-        //     $q1->video_file = $videoPath;
-        //     $q1->video_file_hash = $videoFileHash;
-        //     $q1->save();
-        // }
+        
         $datetime = Carbon::now()->format('Y-m-d H:m:s');
 
         if($request->hasFile('video-blob')) {

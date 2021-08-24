@@ -68,7 +68,7 @@ a:hover {
               <div class="col pr-md-0 d-flex">
                 <label for="">To</label> &nbsp;<input type="date" class="form-control" id="" name="">
               </div>
-              <div class="col"><a href="#" class="btn-view">View</a></div>
+              <div class="col"><a href="#" class="btn-view">View</a></div></div>
             </div>
             <div class="d-flex justify-content-end bd-highlight mb-3">
               <div class="p-2 bd-highlight">Total No of Records</div>
