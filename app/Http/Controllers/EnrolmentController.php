@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\EnrolmentRequest;
 use GuzzleHttp\Client;
-<<<<<<< HEAD
-
-=======
 use Illuminate\Support\Facades\Storage;
->>>>>>> 7a28d99b7e775e2a8dce7ad1de2c18db1c7b99f9
 use App\Enrolment;
 use DOMPDF;
 
