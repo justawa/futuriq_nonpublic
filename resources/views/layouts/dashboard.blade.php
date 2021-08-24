@@ -54,8 +54,10 @@
               </a>
 			  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
             <li><a class="dropdown-item" href="{{route('saurav.ind')}}">Ind </a></li>
-            {{-- <li><a class="dropdown-item" href="{{route('saurav.orggov')}}">org</a></li> --}}
-            <li><a class="dropdown-item" href="{{route('saurav.orggovnon')}}">org </a></li>
+            <li><a class="dropdown-item" href="{{route('saurav.org')}}">ORG GOV</a></li>
+            <li><a class="dropdown-item" href="{{route('saurav.orggovnon')}}">ORG NON </a></li>
+            <li><a class="dropdown-item" href="{{route('saurav.orggovdgst')}}">ORG DGST </a></li>
+
             <li><a class="dropdown-item" href="#">Manage eKyc </a></li>
             {{-- <li><a class="dropdown-item" href="#">Manage eKyc </a></li> --}}
             {{-- <li><a class="dropdown-item" href="#">Manage eKyc </a></li> --}}

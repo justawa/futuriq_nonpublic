@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrgEnrolmentController;
+use App\Http\Controllers\DgstEnlormentController;
+use App\Http\Controllers\OrgGovEnlormentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,17 +63,21 @@ Route::get('/enrolment/application_id_and_dob', 'EnrolmentController@getEnrolmen
 
 // saurav
 Route::view('/ind', 'saurav.ind')->name('saurav.ind');
-Route::view('/orggov', 'saurav.orggov')->name('saurav.orggov');
-Route::view('/orggov2', 'saurav.orggov2')->name('saurav.orggov2');
-Route::get('orggovnon', 'OrgEnrolmentController@create')->name('saurav.orggovnon');
 
+// ORG_GOV ROUTE
+
+Route::get('org', 'OrgGovEnlormentController@create')->name('saurav.org');
+Route::post('org', 'OrgGovEnlormentController@store')->name('saurav.org');
+
+
+// ORG_GOV_NON ROUTE
+Route::get('orggovnon', 'OrgEnrolmentController@create')->name('saurav.orggovnon');
 Route::post('orggovnon', 'OrgEnrolmentController@store')->name('saurav.orggovnon');
-// Route::view('/orggovnon', 'saurav.orggovnon')->name('saurav.orggovnon');
-Route::view('/orggovnon2', 'saurav.orggovnon2')->name('saurav.orggovnon2');
-Route::view('/orggovdgst', 'saurav.orggovdgst')->name('saurav.orggovdgst');
-Route::view('/orggovdgst2', 'saurav.orggovdgst2')->name('saurav.orggovdgst2');
-Route::any('/last', [OrgEnrolmentController::class, 'store'])->name('saurav.last');
-// Route::view('/last', 'saurav.last')->name('saurav.last');
+
+// ORG_GOV_DGST ROUTE
+Route::get('orggovdgst', 'DgstEnlormentController@create')->name('saurav.orggovdgst');
+Route::post('orggovdgst', 'DgstEnlormentController@store')->name('saurav.orggovdgst');
+
 
 
 

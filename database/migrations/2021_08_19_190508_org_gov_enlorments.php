@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Orgenrolments extends Migration
+class OrgGovEnlorments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,21 @@ class Orgenrolments extends Migration
      */
     public function up()
     {
-        Schema::create('orgenrolments', function (Blueprint $table) {
+        Schema::create('OrgGovEnlorments', function (Blueprint $table) {
             $table->id();
             $table->string('certification_type')->nullable();
             $table->string('validity')->nullable();
             $table->string('orgtype')->nullable();
             $table->string('gstno')->nullable();
             $table->string('govorgno')->nullable();
-            $table->string('departmentname')->nullable();
+           $table->string('departmentname')->nullable();
             $table->string('orgpan')->nullable();
             $table->string('orgaddress')->nullable();
             $table->string('orgdocument')->nullable();
-
             $table->string('kycid')->nullable();
             $table->string('kycpin')->nullable();
-
             $table->string('ekycid')->nullable();
             $table->string('ekycpin')->nullable();
-            
             $table->string('pan');
             $table->string('orgname')->nullable();
             $table->string('mobile');
@@ -44,7 +41,6 @@ class Orgenrolments extends Migration
             $table->string('orgid_file');
             $table->timestamps();
         });
-    
     }
 
     /**

@@ -13,7 +13,7 @@ class OrgEnrolmentController extends Controller
         return view('saurav.orggovnon');
     }
 
-
+// YE ORG GOV NON ka Controller Hai
     public function store(Request $request)
     {   $orgenrolment = new Orgenrolment;
         $orgenrolment->certification_type = $request->input('certification_type');

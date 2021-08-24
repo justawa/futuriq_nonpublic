@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     </head>
     <body>
   <section>
@@ -51,8 +51,9 @@
               </a>
 			  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
           <li><a class="dropdown-item" href="{{route('saurav.ind')}}">Ind </a></li>
-          {{-- <li><a class="dropdown-item" href="{{route('saurav.orggov')}}">org</a></li> --}}
-          <li><a class="dropdown-item" href="{{route('saurav.orggovnon')}}">org</a></li>  
+          <li><a class="dropdown-item" href="{{route('saurav.org')}}">ORG GOV</a></li>
+          <li><a class="dropdown-item" href="{{route('saurav.orggovnon')}}">ORG NON </a></li>
+          <li><a class="dropdown-item" href="{{route('saurav.orggovdgst')}}">ORG DGST </a></li>
           <li><a class="dropdown-item" href="#">Manage eKyc </a></li>
           </ul>
 			  
@@ -212,9 +213,9 @@
 			    
                     <div class="card myButton">
                       <div class="card-body">
-
-                     <h2> <a href="{{ url()->previous() }}">&#8249;</a> </h2>
                         
+                     <h2> <a href="{{route('saurav.orggovnon')}}">&#8249;</a> </h2>
+                        {{-- {{ url()->previous() }} --}}
                         <h5>Enrolment of Applicant</h5>
 						
                         <div class="row mt-3 mb-3">
@@ -255,7 +256,7 @@
 
                     <div class="card same mt-3 mb-3 auth-sig">
                       <div class="card-body">
-                     <h2> <a href="{{ url()->previous() }}">&#8249;</a> </h2>
+                     <h2> <a href="{{route('saurav.orggovnon')}}">&#8249;</a> </h2>
 
 						<h5>Enrolment of Authorized signatory</h5>
                         <div class="row mt-3 mb-3">
@@ -350,7 +351,7 @@
                       <div class="card-body">
 					  
 					  <div class="row">
-              <h2> <a href="{{ url()->previous() }}">&#8249;</a> </h2>
+              <h2> <a href="{{route('saurav.orggovnon')}}">&#8249;</a> </h2>
 
                           <div class="col-lg-12"><h5> New User</h5> 
 						  <hr>
