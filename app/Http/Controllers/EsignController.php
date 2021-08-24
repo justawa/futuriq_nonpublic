@@ -224,6 +224,7 @@ class EsignController extends Controller
         $img = file_get_contents(URL::to('/')."/storage/$enrolment->photo_file");
         $data = base64_encode($img);
 
+
         $xml = '<eKycResp ver="3.3" status="2" signerid="'.$enrolment->pan.'@PAN.futuriq" ts="'. \Carbon\Carbon::now()->format('Y-m-d\TH:i:s') .'" txn="'.$txn.'" error="" respCode="'.$resp_code.'">
         <kycData name="'.$enrolment->name.'" mobile="'.$enrolment->mobile.'" email="'.$enrolment->email.'" address="'.$enrolment->address.'" stateProvince="'.$enrolment->state.'" country="IN" postalCode="'.$enrolment->pincode.'" PAN="'.$enrolment->pan.'" DOB="'.$enrolment->birthday.'" Gender="'.$enrolment->gender.'" Aadhaar="'.substr($enrolment->adhaar_no, -4).'" eKYCtype="PAN KYC"/>
         <Photo>'.$data.'</Photo>
@@ -238,7 +239,7 @@ class EsignController extends Controller
 
         $img = file_get_contents(URL::to('/')."/storage/$enrolment->photo_file");
         $data = base64_encode($img);
-
+             
         $xml = '<eKycResp ver="3.3" status="1" signerid="'.$enrolment->pan.'@PAN.futuriq" ts="'. \Carbon\Carbon::now()->format('Y-m-d\TH:i:s') .'" txn="'.$txn.'" error="" respCode="'.$resp_code.'">
         <kycData name="'.$enrolment->name.'" mobile="'.$enrolment->mobile.'" email="'.$enrolment->email.'" address="'.$enrolment->address.'" stateProvince="'.$enrolment->state.'" country="IN" postalCode="'.$enrolment->pincode.'" PAN="'.$enrolment->pan.'" DOB="'.$enrolment->birthday.'" Gender="'.$enrolment->gender.'" Aadhaar="'.substr($enrolment->adhaar_no, -4).'" eKYCtype="PAN KYC"/>
         <Photo>'.$data.'</Photo>
@@ -385,7 +386,7 @@ class EsignController extends Controller
         // $resp_x509certificate3 = $resp_node3->item(0)->getAttribute('X509Certificate');
 
         // file_put_contents("storage/docs/docsignature.crt",$resp_docsignature3);
-
+             
         // $file = fopen("storage/docs/docsignature.crt","w");
         // echo fwrite($file,$resp_docsignature3);
         // fclose($file);
@@ -585,3 +586,4 @@ class EsignController extends Controller
             ],
         ]);
     }
+}

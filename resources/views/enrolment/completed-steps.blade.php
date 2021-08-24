@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-
+@extends('layouts.app')
 @section('style')
 <style>
 .step {
