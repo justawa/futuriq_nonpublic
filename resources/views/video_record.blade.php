@@ -64,9 +64,9 @@
                             </div>  
                           </div>
                           <div class="form-group">
-                            <button type="button" style="float:left;" class="btn btn-primary ml-3 mr-5" id="btnStart" disabled>Record</button>
+                            <button type="button" style="float:left;" class="btn btn-primary mr-2 mr-md-5" id="btnStart" disabled>Record</button>
                             <!-- <button type="button" style="float:left;" class="btn btn-primary mr-3" id="btnStop" >Stop</button> -->
-                            <button type="button" style="float:left;" class="btn btn-primary mr-5" id="btnView" disabled>View</button>
+                            <button type="button" style="float:left;" class="btn btn-primary mr-2 mr-md-5" id="btnView" disabled>View</button>
                             <form method="POST" style="float:left;" action="{{ route('video.verification') }}">
                               @csrf
                               <input type="hidden" name="verification_application_id" id="verification_application_id" />
@@ -179,6 +179,7 @@
 
            view.addEventListener('click', (ev) => {
               vidSave.play();
+
            }); 
 
           //  stop.addEventListener('click', (ev) => {
