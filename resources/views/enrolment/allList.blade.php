@@ -113,7 +113,7 @@ a:hover {
                       <td>{{ $enrolment->name }}</td>
                       <td>{{ $enrolment->pan }}</td>
                       @if(!empty($enrolment->video_file))
-                      <td><button id="view_video"><a href= "{{URL::asset('videos/')}}{{'/'.$enrolment->video_file}}">View Video</button></a></td>
+                      <td><button id="view_video"><a href= "{{ url('/videocheck/' . $enrolment->application_id) }}">View Video</button></a></td>
                       @else
                       <td></td>
                       @endif
