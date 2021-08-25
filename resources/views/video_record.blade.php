@@ -51,8 +51,8 @@
                       </div>
                     </div>
                     <div id="step_2" style="display: none;">
-                      <div class="row justify-content-md-center">
-                        <div class="col-4 align-self-center">
+                      <div class="row justify-content-md-center middle">
+                        <div class="col-12 col-md-4 align-self-center">
                           <p class="mb-2 text-center">Video Recording Left 00:<span id="countdowntimer">22</span>seconds</p>
                           <div class="form-group">
                             <div id="recordVideo" class="embed-responsive embed-responsive-1by1">
@@ -92,6 +92,7 @@
     </div>
 </div>
 @endsection
+
 @section('script')
 {{-- <script>
   var record = document.querySelector("#startRecording");

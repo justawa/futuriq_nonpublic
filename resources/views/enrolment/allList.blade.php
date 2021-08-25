@@ -19,6 +19,21 @@
     right: -55px;
     z-index:1032;
   }
+
+  a {
+    color: #0060B6;
+    text-decoration: none;
+}
+
+a:hover {
+    color:#00A0C6; 
+    text-decoration:none; 
+    cursor:pointer;  
+}
+
+#view_video {
+   background-color: aquamarine;
+}
 </style>
 @endsection
 
@@ -46,7 +61,7 @@
                   <option>RA Verification Pending</option>
                 </select>
               </div>
-              <div class="col pr-md-0"><input type="text" class="form-control" placeholder=""></div>
+              <div class="col pr-md-0"><input type="text" class="form-control" placeholder="" name="search"></div>
               <div class="col pr-md-0 d-flex">
                 <label for="">From</label> &nbsp;<input type="date" class="form-control" id="" name="">
               </div>
@@ -63,7 +78,8 @@
 
             <div class="row">
               <div class="col-md-4">
-                <form id="search_by_application_id" class="row">
+                <form name="searchform" action="{{ route('enrolment.all_list') }}" method="get">
+                  {{ csrf_field() }}
                   <div class="col-md-9">
                     <div class="form-group">
                       <input type="text" name="application_id" placeholder="Application ID" class="form-control" />
@@ -90,13 +106,14 @@
                 <tbody id="dsc-list-dynamic-body">
                   @if($enrolments->count() > 0)
                     @foreach($enrolments as $enrolment)
+
                     <tr>
                       <td><input type="checkbox" /></td>
                       <td><a href="{{ route('enrolment.steps.completed', $enrolment->application_id) }}">{{ $enrolment->application_id }}</a></td>
                       <td>{{ $enrolment->name }}</td>
                       <td>{{ $enrolment->pan }}</td>
                       @if(!empty($enrolment->video_file))
-                      <td><button><a href= "{{URL::asset('videos/')}}{{'/'.$enrolment->video_file}}">View Video</button></a></td>
+                      <td><button id="view_video"><a href= "{{URL::asset('videos/')}}{{'/'.$enrolment->video_file}}">View Video</button></a></td>
                       @else
                       <td></td>
                       @endif

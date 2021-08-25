@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\EnrolmentRequest;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
-
 use App\Enrolment;
 use DOMPDF;
 
@@ -100,7 +99,12 @@ class EnrolmentController extends Controller
 
     public function getAllEnrolment(Request $request)
     {
-        $enrolments = Enrolment::get();
+        if($request->application_id){
+          $enrolments = Enrolment::where('application_id','=',$request->application_id)->get();
+        }
+        else{
+          $enrolments = Enrolment::get();
+        }
         return view('enrolment.allList', compact('enrolments'));
     }
 
@@ -154,6 +158,7 @@ class EnrolmentController extends Controller
         // );
         $enrolment = Enrolment::where(['application_id' => $request->verification_application_id, 'birthday' => $request->verfication_dob])->first();
         $enrolment->video_file = $request->verification_video_hash;
+        $enrolment->status = "0";
 
         if ($enrolment->save()) {
             return redirect()->back()->with('success', 'Verification saved successfully');
