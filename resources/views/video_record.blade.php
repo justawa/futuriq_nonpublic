@@ -1,5 +1,24 @@
 @extends('layouts.app')
 
+
+@section('style')
+<style>
+#topText {
+  position: absolute;
+    top: 40px;
+    color: #000;
+    z-index: 9;
+}
+
+#topText1 {
+  position: absolute;
+    top: 40px;
+    color: #000;
+    z-index: 9;
+}
+</style>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -47,7 +66,7 @@
                         </div>
                       </div>
                       <div class="text-right">
-                        <button type="button" class="btn-form" id="move_step_2" disabled>Next</button>
+                        <button type="button" class="btn-form" id="move_step_2" onclick = "display_ct()" disabled>Next</button>
                       </div>
                     </div>
                     <div id="step_2" style="display: none;">
@@ -57,16 +76,24 @@
                           <p class="mb-2 text-center" id="after_view" style="visibility:hidden">Video Recorded at  <span id="date_time"></span></p>
                           <div class="form-group">
                             <div id="recordVideo" class="embed-responsive embed-responsive-1by1">
+                              <div class="overlayText">
+                                <p id="topText">Content above your video</p>
+                              </div>
                               <video id="videoElement" controls></video>
                             </div>
-                            <div id="viewVideo" class="embed-responsive embed-responsive-1by1">
+                            <div id="viewVideo" class="container embed-responsive embed-responsive-1by1">
+                              <div class="overlayText">
+                                <p id="topText1">Content above your video</p>
+                              </div>
                               <video id="vid2" controls></video>
-                            </div>  
+
+                            </div> 
+                            
                           </div>
                           <div class="form-group">
                             <button type="button" style="float:left;" class="btn btn-primary mr-2 mr-md-5" id="btnStart" disabled>Record</button>
                             <!-- <button type="button" style="float:left;" class="btn btn-primary mr-3" id="btnStop" >Stop</button> -->
-                            <button type="button" style="float:left;" class="btn btn-primary mr-2 mr-md-5" id="btnView" disabled>View</button>
+                            <button type="button" style="float:left;" class="btn btn-primary mr-2 mr-md-5" id="btnView" onclick = "display_ct()" disabled>View</button>
                             <form method="POST" style="float:left;" action="{{ route('video.verification') }}">
                               @csrf
                               <input type="hidden" name="verification_application_id" id="verification_application_id" />
@@ -114,14 +141,44 @@
   }
 </script> --}}
 
+<script type="text/javascript"> 
+function display_c(){
+var refresh=1000; // Refresh rate in milli seconds
+mytime=setTimeout('display_ct()',refresh)
+}
 
+function display_ct() {
+var x = new Date()
+// var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getFullYear(); 
+// x1 = x1 + " - " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds();
+var x1=x.toUTCString();// changing the display to UTC string
+console.log(x1);
+document.getElementById('topText').innerHTML = x1;
+display_c();
+ }
+
+ function display_c1(){
+var refresh=1000; // Refresh rate in milli seconds
+mytime=setTimeout('display_ct1()',refresh)
+}
+
+function display_ct1() {
+var x = new Date()
+// var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getFullYear(); 
+// x1 = x1 + " - " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds();
+var x1=x.toUTCString();// changing the display to UTC string
+console.log(x1);
+document.getElementById('topText1').innerHTML = x1;
+display_c1();
+ }
+</script>
 <script>
     document.getElementById('recordVideo').style.display = "block";
     document.getElementById('viewVideo').style.display = "none";
     openVideoRecording();
     let video = document.querySelector('#videoElement');
     let vidSave = document.querySelector('#vid2');
-    
+    video.currentTime = 5;
     function openVideoRecording() {
       let constraintObj = {
           audio: true,
@@ -252,13 +309,14 @@
     }
 
     function makeXMLHttpRequest(url, data, callback) {
+      display_ct1();
         console.log('Data===>', data);
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {
               const obj = JSON.parse(request.responseText);
                 callback(location.href + request.responseText);
-                console.log("res", obj.new.datetime);
+                console.log("res", obj.new.image_name);
                 document.getElementById('verification_video_hash').value = obj.new.image_name;
                 document.getElementById('date_time').textContent = obj.new.datetime;
                 document.getElementById('verification_form_submit').disabled = false;

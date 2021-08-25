@@ -108,13 +108,43 @@ class EnrolmentController extends Controller
         return view('enrolment.allList', compact('enrolments'));
     }
 
-    public function change_status($id,$status)
+    public function change_status($type,$id,$status)
     {
-        $enrol = Enrolment::find($id);
-        $enrol->status = $status;
-        $enrol->save();
-        $enrolments = Enrolment::get();
-        return view('enrolment.allList' , compact('enrolments'));
+        if($type == "list"){
+            $enrol = Enrolment::find($id);
+            $enrol->status = $status;
+            $enrol->save();
+
+            return redirect()->route('enrolment.all_list');
+        }
+        else if($type == "vid_status"){
+            $enrol = Enrolment::find($id);
+            $enrol->video_approval_status = $status;
+            $enrol->save();
+
+            return redirect()->route('adminhtml.dashboard_dsc');
+        }
+        else if($type == "sig_status"){
+            $enrol = Enrolment::find($id);
+            $enrol->signature_approval_status = $status;
+            $enrol->save();
+
+            return redirect()->route('adminhtml.dashboard_dsc');
+        }
+        else if($type == "l2_status"){
+            $enrol = Enrolment::find($id);
+            $enrol->l2_approval_status = $status;
+            $enrol->save();
+
+            return redirect()->route('adminhtml.dashboard_dsc');
+        }
+        
+    }
+
+    public function getDashboard_dsc(Request $request)
+    {
+          $enrolments = Enrolment::get();
+          return view('adminhtml.dashboard_dsc', compact('enrolments'));
     }
 
     public function get_offline_kyc(Request $request, $application_id)

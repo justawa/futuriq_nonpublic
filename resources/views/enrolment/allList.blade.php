@@ -119,10 +119,10 @@ a:hover {
                       @endif
                       <td>
                          @if(empty($enrolment->status))
-                          <a class="btn btn-primary btn-sm" href="{{ url('enrolment/change_status/' . $enrolment->id ."/" . "1") }}">
+                          <a class="btn btn-primary btn-sm" href="{{ url('enrolment/change_status/' . "list" . "/" . $enrolment->id ."/" . "1") }}">
                               <span class="badge badge-success">Approved</span>                           
                           </a>
-                          <a class="btn btn-info btn-sm" href="{{ url('enrolment/change_status/' . $enrolment->id ."/" . "2") }}">
+                          <a class="btn btn-info btn-sm" href="{{ url('enrolment/change_status/' . "list" . "/" . $enrolment->id ."/" . "2") }}">
                              <span class="badge badge-danger">Rejected</span>
                           </a>
                         @else
