@@ -48,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('adminhtml/dashboard_dsc', 'EnrolmentController@getDashboard_dsc')->name('adminhtml.dashboard_dsc');
     Route::post('/send_otp', 'EnrolmentController@send_otp')->name('send_otp');
     Route::post('/verify_email', 'EnrolmentController@verify_email')->name('verify_email');
-
+    Route::post('/verify_phone', 'EnrolmentController@verify_phone')->name('verify_phone');
 
 
 

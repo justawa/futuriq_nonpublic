@@ -1,5 +1,8 @@
 @extends('layouts.dashboard')
 @extends('layouts.app')
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 @section('style')
 <style>
 .step {
@@ -40,12 +43,12 @@
   border-radius: 50%;
   content: "";
   display: block;
-  height: .9rem;
+  height: 1.3rem;
   left: 50%;
   position: absolute;
-  top: .2rem;
+  top: 0px;
   transform: translateX(-50%);
-  width: .9rem;
+  width: 1.3rem;
   z-index: 1;
 }
 
@@ -60,6 +63,46 @@
 
 .step .step-item.active ~ .step-item a::before {
   background: #e7e9ed;
+}
+
+.badge-success {
+    color: #fff;
+    background-color: #38c172;
+    position: relative;
+    /* left: 40%; */
+    z-index: 9;
+    border-radius: 50%;
+    width: 1.3rem;
+    height: 1.3rem;
+    top: -4px;
+    line-height: 1.5;
+    padding-top: 5px;
+}
+a .badge-danger {
+  color: #fff;
+    background-color: #ca1a1a;
+    position: relative;
+    left: 16%;
+    z-index: 9;
+    border-radius: 50%;
+    width: 1.4rem;
+    height: 1.3rem;
+    top: -23px;
+    line-height: 1.5;
+    padding-top: 5px;
+  }
+.badge-danger{
+    color: #fff;
+    background-color: #ca1a1a;
+    position: relative;
+    /* left: 40%; */
+    z-index: 9;
+    border-radius: 50%;
+    width: 1.3rem;
+    height: 1.3rem;
+    top: -4px;
+    line-height: 1.5;
+    padding-top: 5px;
 }
 </style>
 @endsection
@@ -127,16 +170,31 @@
             <div class="my-5"> 
               <ul class="step d-flex flex-nowrap">
                 <li class="step-item">
-                  <a href="#!" class="">Form Submission</a>
+                  {{-- <a href="#!" class="">Form Submission</a> --}}
+                  <span id="check" class="badge badge-success"><i class="fa fa-check" aria-hidden="true"></i></span><a href="#!" class="" >Form Submission</a>
                 </li>
                 <li class="step-item">
-                  <a href="#!" class="" data-toggle="modal" data-target="#verifyModal">Mobile Verification</a>
+                  @if(!empty($enrolment->mobile_verified))
+                  <span id="check" class="badge badge-success"><i class="fa fa-check" aria-hidden="true"></i></span><a href="#!" class="" data-toggle="modal" data-target="#verifyphone">Mobile Verification</a>
+                  @else
+                    <span class="badge badge-danger" data-toggle="modal" data-target="#verifyphone"><i class="fa fa-times" aria-hidden="true"></i></span><a href="#!" class="" data-toggle="modal" data-target="#verifyphone">Mobile Verification</a>
+                  @endif
+                
                 </li>
                 <li class="step-item">
-                  <a href="#!" class="" data-toggle="modal" data-target="#verifyModal">Email Verification</a>
-                </li>
+                  @if(!empty($enrolment->email_verified))
+                  <span id="check" class="badge badge-success"><i class="fa fa-check" aria-hidden="true"></i></span><a href="#!" class="" data-toggle="modal" data-target="#verifyModal">Email Verification</a>
+                  @else
+                    <span class="badge badge-danger" data-toggle="modal" data-target="#verifyModal"><i class="fa fa-times" aria-hidden="true"></i></span><a href="#!" class="" data-toggle="modal" data-target="#verifyModal">Email Verification</a>
+                  @endif
+                  </li>
                 <li class="step-item active">
-                  <a href="{{ route('vidoerecord') }}" class="">Video Recording</a>
+                  {{-- <a href="{{ route('vidoerecord') }}" class="">Video Recording</a> --}}
+                  @if(!empty($enrolment->video_file))
+                  <span id="check" class="badge badge-success"><i class="fa fa-check" aria-hidden="true"></i></span><a href="#!" class="">Video Recording</a>
+                  @else
+                    <a href="{{ route('vidoerecord') }}" class=""><span class="badge badge-danger"><i class="fa fa-times" aria-hidden="true"></i></span>Video Recording</a>
+                  @endif
                 </li>
                 <li class="step-item">
                   <a href="#!" class="">ESign</a>
@@ -177,7 +235,6 @@
   </div>
 </div>
 
-
 <div id="verifyModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -189,10 +246,133 @@
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
-            <input type="text" name="verifier" class="form-control" placeholder="Your Email" />
+          <div class="form-group" id="email_div">
+            <input type="text" id="email" name="verifier" class="form-control" placeholder="Your Email" />
           </div>
-          <button id="send-otp" type="button" class="btn btn-link btn-sm">Send OTP</button>
+          <div class="form-group d-none" id="otp_div">
+            <input type="text" id="otp" name="verifier" class="form-control" placeholder="Enter Otp" />
+          </div>
+          <div class="row">
+            <div class="col-3">
+               <button id="send_otp" type="button" class="btn btn-primary" onclick="sendOtp()">Send OTP</button>
+            </div>
+            <div class="col-2">
+               <button id="verify" type="button" class="btn btn-primary" onclick="verify_email({{ $enrolment->application_id }})" disabled>Verify</button>
+            </div>
+          </div>
+          
+          <p id="otp_error"></p>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+ function sendOtp(){
+    var emailButtonClasses = document.getElementById("email_div").classList;
+    var otpButtonClasses = document.getElementById("otp_div").classList;
+    let email = document.getElementById('email').value;
+    	$.ajax({
+	      type: "POST",
+	      url: '{{route('send_otp')}}',
+	      datatype: 'json',
+	      data: {
+		        "_token": "{{ csrf_token() }}",
+		        "email": email,
+	        },
+	      success: function (data) {
+          if(data == 1){
+            $("#otp_error").html(
+          `<span style="color: green">OTP sent succesfully</span>`
+             );
+           emailButtonClasses.add("d-none");
+           otpButtonClasses.remove("d-none");
+           otpButtonClasses.add("d-block");
+           document.getElementById("send_otp").disabled = "true";
+           document.getElementById("verify").removeAttribute("disabled");
+
+          }
+          else{
+            $("#otp_error").html(
+              `<span style="color: red">Please provide valid EmailId</span>`
+             );
+          }
+			  
+	      },
+	      complete: function () {
+	      },
+	      error: function () {
+	      }
+	  });
+  }
+
+  function verify_email(id){
+    //  document.getElementById('send_otp').style.visibility = "hidden";
+    // document.getElementById('verify').style.visibility = "visible";
+    let email = document.getElementById('email').value;
+    let otp = document.getElementById('otp').value;
+    console.log(id);
+    	$.ajax({
+	      type: "POST",
+	      url: '{{route('verify_email')}}',
+	      datatype: 'json',
+	      data: {
+		        "_token": "{{ csrf_token() }}",
+		        "email": email,
+            "otp": otp,
+	        },
+	      success: function (data) {
+         if(data == 1){
+            window.location.replace(window.location.origin + '/enrolment/completed-steps/' + id);
+            
+          }
+          else{
+            $("#otp_error").html(
+              `<span style="color: red">Invalid Otp,Try Again</span>`
+             );
+          }
+			  
+	      },
+	      complete: function () {
+	      },
+	      error: function () {
+	      }
+	  });
+  }
+
+  </script>
+
+<div id="verifyphone" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Verify</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group" id="phone_div">
+            <input type="text" id="phone" name="verifier" class="form-control" placeholder="Your phone number" />
+          </div>
+          <div class="form-group d-none" id="otp_div1">
+            <input type="text" id="otp1" name="verifier" class="form-control" placeholder="Enter Otp" />
+          </div>
+          <div class="row">
+            <div class="col-3">
+               <button id="send_otp1" type="button" class="btn btn-primary" onclick="sendOtp1()">Send OTP</button>
+            </div>
+            <div class="col-2">
+               <button id="verify1" type="button" class="btn btn-primary" onclick="verify_phone({{ $enrolment->application_id }})" disabled>Verify</button>
+            </div>
+          </div>
+          
           <p id="otp_error"></p>
         </form>
       </div>
@@ -205,35 +385,78 @@
 </div>
 @endsection
 
-@section('scripts')
-<script>
-  $(document).ready(function() {
-    $("#send-otp").on("click", function() {
-      $(this).attr("disabled", true);
-      const verifier = $('input[name="email"]').val();
-      $("#email_otp_error").html("");
-      console.log("sending request....", verifier);
-      if (verifier) {
-        sendOtp(verifier);
-      } else {
-        $("#email_otp_error").html(
-          `<span style="color: red">Please provide valid email</span>`
-        );
-        $(this).attr("disabled", false);
-      }
-    });
-    function sendOtp(verifier) {
-      $.ajax({
-        url: "/send/otp",
-        type: "POST",
-        data: { verifier: verifier },
-        success: function(response) {
-          $("#otp_error").html(
-            `<span style="color: ${response.success ? "green" : "red"}">${response.message}</span>`
-          );
-        }
-      });
-    }
-  });
+<script type="text/javascript">
+
+ function sendOtp1(){
+    var emailButtonClasses = document.getElementById("phone_div").classList;
+    var otpButtonClasses = document.getElementById("otp_div1").classList;
+    let phone = document.getElementById('phone').value;
+    	$.ajax({
+	      type: "POST",
+	      url: '{{route('send_otp')}}',
+	      datatype: 'json',
+	      data: {
+		        "_token": "{{ csrf_token() }}",
+		        "email": phone,
+	        },
+	      success: function (data) {
+          if(data == 1){
+            $("#otp_error").html(
+          `<span style="color: green">OTP sent succesfully</span>`
+             );
+           emailButtonClasses.add("d-none");
+           otpButtonClasses.remove("d-none");
+           otpButtonClasses.add("d-block");
+           document.getElementById("send_otp1").disabled = "true";
+           document.getElementById("verify1").removeAttribute("disabled");
+
+          }
+          else{
+            $("#otp_error").html(
+              `<span style="color: red">Please provide valid EmailId</span>`
+             );
+          }
+			  
+	      },
+	      complete: function () {
+	      },
+	      error: function () {
+	      }
+	  });
+  }
+
+  function verify_phone(id){
+    //  document.getElementById('send_otp').style.visibility = "hidden";
+    // document.getElementById('verify').style.visibility = "visible";
+    let phone = document.getElementById('phone').value;
+    let otp = document.getElementById('otp1').value;
+    console.log(id);
+    	$.ajax({
+	      type: "POST",
+	      url: '{{route('verify_phone')}}',
+	      datatype: 'json',
+	      data: {
+		        "_token": "{{ csrf_token() }}",
+		        "email": phone,
+            "otp": otp,
+	        },
+	      success: function (data) {
+         if(data == 1){
+            window.location.replace(window.location.origin + '/enrolment/completed-steps/' + id);
+            
+          }
+          else{
+            $("#otp_error").html(
+              `<span style="color: red">Invalid Otp,Try Again</span>`
+             );
+          }
+			  
+	      },
+	      complete: function () {
+	      },
+	      error: function () {
+	      }
+	  });
+  }
+
 </script>
-@endsection

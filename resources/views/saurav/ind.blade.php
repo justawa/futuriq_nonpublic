@@ -124,8 +124,9 @@
                                   placeholder="Pan Number"
                                   name="pan"
                                    maxlength="10"
+                                   id="pan"
                                   />
-                                  <p id="pan_error"></p>
+                                  <p id="pan_error" style="color: red;"></p>
                               </div>
                             </div>
                             <div class="row mb-3">
@@ -137,8 +138,9 @@
                                   placeholder="Name"
                                   name="name"
                                    maxlength="20"
+                                   id="name"
                                   />
-                                  <p id="name_error"></p>
+                                  <p id="name_error" style="color: red;"></p>
                               </div>
                             </div>
                             <div class="row mb-3">
@@ -150,13 +152,14 @@
                                   placeholder="Email"
                                   name="email"
                                   id="email"
+                                  onblur="email_script()"
                                   />
-                                  <p id="email_error"></p>
+                                  <p id="email_error" style="color: red;"></p>
                               </div>
                               <div class="col-lg-1"><span id="check" style="visibility:hidden;margin-top:10px;" class="badge badge-success"><i class="fa fa-check" aria-hidden="true"></i></span></div>
                             </div>
-                            <div class="row">
-                              <div class="col-4">
+                            <div class="row" id="email_row">
+                              <div class="col-4" id="verifylater_div">
                                 <input type="checkbox" style="margin-right:10px;" id ="verify_later" name="verify_later" value="yes" onclick="calc()"><span>Verify Later</span>
 
                               </div>
@@ -164,36 +167,38 @@
                                   <input type="text" id="otp" class="form-control" placeholder="Enter Otp" name="Otp"/><br>
                                 </div>
                                 <div class="col-3" >
-                                  <button type="button" style="background-color: cornflowerblue; color:#000;" id="send_otp" onclick="sendOtp()">Send Otp</button>
-                                  <button type="button" style="background-color: cornflowerblue; color:#000;visibility:hidden;" id="verify" onclick="verify_email()">Verify</button>
+                                  <button type="button" style="background-color: cornflowerblue; color:#000;" id="send_otp" class="" onclick="sendOtp()">Send Otp</button>
+                                  <button type="button" style="background-color: cornflowerblue; color:#000;" id="verify" class="d-none" onclick="verify_email()">Verify</button>
                                 </div>
                                 
                               
                             </div>
                             <div class="row mb-3">
                               <div class="col-lg-4">Mobile</div>
-                              <div class="col-lg-8">
+                              <div class="col-lg-7">
                                 <input
-                                  type="number"
+                                  type="tel"
                                   class="form-control"
                                   placeholder="Mobile Number"
                                   name="mobile"
+                                  id="mobile"
                                   maxlength="10"
+                                  onblur="phone_script()"
                                   />
-                                  <p id="mobile_error"></p>
+                                  <p id="mobile_error" style="color: red;"></p>
                               </div>
+                              <div class="col-lg-1"><span id="check1" style="visibility:hidden;margin-top:10px;" class="badge badge-success"><i class="fa fa-check" aria-hidden="true"></i></span></div>
                             </div>
-                            <div class="row">
+                            <div class="row" id="mobile_row">
                              <div class="col-4">
-                                <input type="checkbox" style="margin-right:10px;" id ="verify_later" name="verify_later" value="yes" onclick="calc()"><span>Verify Later</span>
-
+                                <input type="checkbox" style="margin-right:10px;" id ="verify_later1" name="verify_later" value="yes" onclick="calc1()"><span>Verify Later</span>
                               </div>
                               <div class="col-5">
-                                  <input type="text" id="otp" class="form-control" placeholder="Enter Otp" name="Otp"/><br>
+                                  <input type="text" id="otp1" class="form-control" placeholder="Enter Otp" name="Otp"/><br>
                                 </div>
                                 <div class="col-3" >
-                                  <button type="button" style="background-color: cornflowerblue; color:#000;" id="send_otp" onclick="sendOtp()">Send Otp</button>
-                                  <button type="button" style="background-color: cornflowerblue; color:#000;visibility:hidden;" id="verify" onclick="verify_email()">Verify</button>
+                                  <button type="button" style="background-color: cornflowerblue; color:#000;" id="send_otp1" class="" onclick="sendOtp1()">Send Otp</button>
+                                  <button type="button" style="background-color: cornflowerblue; color:#000;" id="verify1" class="d-none" onclick="verify_email1()">Verify</button>
                                 </div>
                               
                             </div>
@@ -202,11 +207,12 @@
                               <div class="col-lg-8">
                                 <input
                                   type="date"
-                                  id="birthday"
                                   class="form-control"
                                   name="birthday"
+                                  id="dob"
+                                  onblur="dob_script()"
                                   />
-                                  <p id="birthday_error"></p>
+                                  <p id="birthday_error" style="color: red;"></p>
                               </div>
                             </div>
                             <div class="row mb-3">
@@ -240,13 +246,15 @@
                               <div class="col-lg-4">Pincode</div>
                               <div class="col-lg-8">
                                 <input
-                                  type="number"
+                                  type="tel"
                                   class="form-control"
                                   placeholder="Pincode"
                                   name="pincode"
+                                  id="pincode"
                                   maxlength="6"
+                                  onblur="pincode_script()"
                                   />
-                                  <p id="pincode_error"></p>
+                                  <p id="pincode_error" style="color: red;"></p>
                               </div>
                             </div>
                             <div class="row mb-3">
@@ -377,10 +385,119 @@
 
 <script type="text/javascript">
 
+function email_script(){
+     var email = $("#email").val();
+     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if(email == ""){
+        $("#email_error").text("Please enter a email");
+       email.focus;
+     }
+     else{
+     if (!filter.test(email)) {
+       //alert('Please provide a valid email address');
+       $("#email_error").text("Please enter a  valid email");
+       email.focus;
+       //return false;
+    } else {
+        $("#email_error").text("");
+    }
+     }
+ }
+
+ function phone_script(){
+     var phone = $("#mobile").val();
+     console.log(phone);
+     var filter = /^[0-9]{10}$/;
+     if(phone == ""){
+        $("#mobile_error").text("Please enter a  mobile number");
+       phone.focus;
+     }
+     else{
+     if (!filter.test(phone)) {
+       //alert('Please provide a valid email address');
+       $("#mobile_error").text("Please enter a valid mobile number");
+       phone.focus;
+       //return false;
+    } else {
+        $("#mobile_error").text("");
+    }
+     }
+ }
+
+  function pincode_script(){
+     var pincode = $("#pincode").val();
+     console.log(pincode);
+     var filter = /^[0-9]{6}$/;
+     if(pincode == ""){
+        $("#pincode_error").text("Please enter a pincode");
+       pincode.focus;
+     }
+     else{
+     if (!filter.test(pincode)) {
+       //alert('Please provide a valid email address');
+       $("#pincode_error").text("Please enter a valid pincode");
+       pincode.focus;
+       //return false;
+    } else {
+        $("#pincode_error").text("");
+    }
+     }
+ }
+
+ function dob_script(){
+     var dob = $("#dob").val();
+     var birthday = new Date(dob)
+     console.log(dob);
+     var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    var age =  Math.abs(ageDate.getUTCFullYear() - 1970);
+    console.log(age);
+     if(age < 18) {
+        $("#birthday_error").text("Age is less than 18");
+       dob.focus;
+     }
+ }
+
+//  function pan_script(){
+//      var pan = $("#pan").val();
+//      console.log(pan);
+//      var filter = /^[0-9]{6}$/;
+//      if(pan == ""){
+//         $("#pan_error").text("Please enter a pan number");
+//        pan.focus;
+//      }
+//     //  if (!filter.test(pincode)) {
+//     //    //alert('Please provide a valid email address');
+//     //    $("#error_pincode").text("Please enter a valid pincode");
+//     //    pincode.focus;
+//     //    //return false;
+//     // } else {
+//     //     $("#error_pincode").text("");
+//     // }
+//  }
+//  function name_script(){
+//      var name = $("#name").val();
+//      console.log(name);
+//      var filter = /^[0-9]{6}$/;
+//      if(name == ""){
+//         $("#name_error").text("Please enter a name");
+//        name.focus;
+//      }
+//     //  if (!filter.test(pincode)) {
+//     //    //alert('Please provide a valid email address');
+//     //    $("#error_pincode").text("Please enter a valid pincode");
+//     //    pincode.focus;
+//     //    //return false;
+//     // } else {
+//     //     $("#error_pincode").text("");
+//     // }
+//  }
+
 function sendOtp(){
-    //  document.getElementById('send_otp').style.visibility = "hidden";
-    // document.getElementById('verify').style.visibility = "visible";
+    
     let email = document.getElementById('email').value;
+    var otpClasses = document.getElementById("send_otp").classList;
+    var verifyClasses = document.getElementById("verify").classList;
     console.log(email);
     	$.ajax({
 	      type: "POST",
@@ -393,8 +510,8 @@ function sendOtp(){
 	      success: function (data) {
           if(data == 1){
             alert("OTP Sent Succesfully");
-            document.getElementById('send_otp').style.visibility = "hidden";
-            document.getElementById('verify').style.visibility = "visible";
+            otpClasses.add("d-none");
+            verifyClasses.remove("d-none");
           }
           else{
             alert("OTP not Sent.Please check your EmailId");
@@ -413,6 +530,8 @@ function sendOtp(){
     // document.getElementById('verify').style.visibility = "visible";
     let email = document.getElementById('email').value;
     let otp = document.getElementById('otp').value;
+    var emailButtonClasses = document.getElementById("email_row").classList;
+    var verifyButtonClasses = document.getElementById("verify").classList;
 
     	$.ajax({
 	      type: "POST",
@@ -426,6 +545,9 @@ function sendOtp(){
 	      success: function (data) {
          if(data == 1){
             document.getElementById('check').style.visibility = "visible";
+            emailButtonClasses.add("d-none");
+            verifyButtonClasses.add("d-none");
+            
           }
           else{
             alert("Invalid OTP.Try again...");
@@ -450,6 +572,87 @@ function sendOtp(){
     else{
       document.getElementById('otp').style.visibility = "visible";
       document.getElementById('send_otp').style.visibility = "visible";
+    } 
+}
+</script>
+
+<script type="text/javascript">
+
+    function sendOtp1() {
+    let email = document.getElementById('email').value;
+    var otpClasses1 = document.getElementById("send_otp1").classList;
+    var verifyClasses1 = document.getElementById("verify1").classList;
+    console.log(email);
+    	$.ajax({
+	      type: "POST",
+	      url: '{{route('send_otp')}}',
+	      datatype: 'json',
+	      data: {
+		        "_token": "{{ csrf_token() }}",
+		        "email": email,
+	        },
+	      success: function (data) {
+          if(data == 1){
+            alert("OTP Sent Succesfully");
+            otpClasses1.add("d-none");
+            verifyClasses1.remove("d-none");
+          }
+          else{
+            alert("OTP not Sent.Please check your EmailId");
+          }
+			  
+	      },
+	      complete: function () {
+	      },
+	      error: function () {
+	      }
+	  });
+  }
+
+  function verify_email1()
+  {
+    let email = document.getElementById('email').value;
+    let otp = document.getElementById('otp1').value;
+    var mobileButtonClasses = document.getElementById("mobile_row").classList;
+    var verify1ButtonClasses = document.getElementById("verify1").classList;
+    	$.ajax({
+	      type: "POST",
+	      url: '{{route('verify_phone')}}',
+	      datatype: 'json',
+	      data: {
+		        "_token": "{{ csrf_token() }}",
+		        "email": email,
+            "otp": otp,
+	        },
+	      success: function (data) {
+         if(data == 1){
+            document.getElementById('check1').style.visibility = "visible";
+            mobileButtonClasses.add("d-none");
+            verify1ButtonClasses.add("d-none");
+          }
+          else{
+            alert("Invalid OTP.Try again...");
+          }
+			  
+	      },
+	      complete: function () {
+	      },
+	      error: function () {
+	      }
+	  });
+  }
+
+  function calc1()
+{
+  if (document.getElementById('verify_later1').checked) 
+  {
+      document.getElementById('otp1').style.visibility = "hidden";
+      document.getElementById('send_otp1').style.visibility = "hidden";
+      document.getElementById('verify1').style.visibility = "hidden";
+    }
+    else{
+      document.getElementById('otp1').style.visibility = "visible";
+      document.getElementById('send_otp1').style.visibility = "visible";
     } 
 }
 

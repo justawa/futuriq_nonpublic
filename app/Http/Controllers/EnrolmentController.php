@@ -246,16 +246,8 @@ class EnrolmentController extends Controller
                     ])->first();
 
               $otp = rand(4000,9000);
-            
-
-           // $otp = rand(4000,9000);
-
             $userC->otp = $otp;
             $userC->save();
-            $mail_details = [
-            'subject' => 'Testing Application OTP',
-            'body' => 'Your OTP is : '. $otp
-        ];
             Mail::to($request->email)->send(new sendOtp($otp));
         
         return 1;
@@ -274,6 +266,24 @@ class EnrolmentController extends Controller
 
           if($user){
               $user->email_verified = 1;
+              $user->save();
+              Enrolment::where('email','=',$request->email)->update(['otp' => null]);
+
+              return 1;
+          }
+          else{
+              return 0;
+          }
+    }
+
+    public function verify_phone(Request $request){
+        $user = Enrolment::where([
+            'email' => $request->email,
+            'otp' => $request->otp
+          ])->first();
+
+          if($user){
+              $user->mobile_verified = 1;
               $user->save();
               Enrolment::where('email','=',$request->email)->update(['otp' => null]);
 
