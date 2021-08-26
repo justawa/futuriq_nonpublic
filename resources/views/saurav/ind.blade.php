@@ -1,5 +1,7 @@
 @extends('layouts.dashboard')
 @section('page-heading', 'Apply DSC')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 @section('content')
 <div class="row">
   <div class="col-md-12">
@@ -121,6 +123,7 @@
                                   class="form-control"
                                   placeholder="Pan Number"
                                   name="pan"
+                                   maxlength="10"
                                   />
                                   <p id="pan_error"></p>
                               </div>
@@ -133,33 +136,66 @@
                                   class="form-control"
                                   placeholder="Name"
                                   name="name"
+                                   maxlength="20"
                                   />
                                   <p id="name_error"></p>
                               </div>
                             </div>
                             <div class="row mb-3">
                               <div class="col-lg-4">Email</div>
-                              <div class="col-lg-8">
+                              <div class="col-lg-7">
                                 <input
                                   type="email"
                                   class="form-control"
                                   placeholder="Email"
                                   name="email"
+                                  id="email"
                                   />
                                   <p id="email_error"></p>
                               </div>
+                              <div class="col-lg-1"><span id="check" style="visibility:hidden;margin-top:10px;" class="badge badge-success"><i class="fa fa-check" aria-hidden="true"></i></span></div>
+                            </div>
+                            <div class="row">
+                              <div class="col-4">
+                                <input type="checkbox" style="margin-right:10px;" id ="verify_later" name="verify_later" value="yes" onclick="calc()"><span>Verify Later</span>
+
+                              </div>
+                              <div class="col-5">
+                                  <input type="text" id="otp" class="form-control" placeholder="Enter Otp" name="Otp"/><br>
+                                </div>
+                                <div class="col-3" >
+                                  <button type="button" style="background-color: cornflowerblue; color:#000;" id="send_otp" onclick="sendOtp()">Send Otp</button>
+                                  <button type="button" style="background-color: cornflowerblue; color:#000;visibility:hidden;" id="verify" onclick="verify_email()">Verify</button>
+                                </div>
+                                
+                              
                             </div>
                             <div class="row mb-3">
                               <div class="col-lg-4">Mobile</div>
                               <div class="col-lg-8">
                                 <input
-                                  type="tel"
+                                  type="number"
                                   class="form-control"
                                   placeholder="Mobile Number"
                                   name="mobile"
+                                  maxlength="10"
                                   />
                                   <p id="mobile_error"></p>
                               </div>
+                            </div>
+                            <div class="row">
+                             <div class="col-4">
+                                <input type="checkbox" style="margin-right:10px;" id ="verify_later" name="verify_later" value="yes" onclick="calc()"><span>Verify Later</span>
+
+                              </div>
+                              <div class="col-5">
+                                  <input type="text" id="otp" class="form-control" placeholder="Enter Otp" name="Otp"/><br>
+                                </div>
+                                <div class="col-3" >
+                                  <button type="button" style="background-color: cornflowerblue; color:#000;" id="send_otp" onclick="sendOtp()">Send Otp</button>
+                                  <button type="button" style="background-color: cornflowerblue; color:#000;visibility:hidden;" id="verify" onclick="verify_email()">Verify</button>
+                                </div>
+                              
                             </div>
                             <div class="row mb-3">
                               <div class="col-lg-4">Date of Birth</div>
@@ -204,10 +240,11 @@
                               <div class="col-lg-4">Pincode</div>
                               <div class="col-lg-8">
                                 <input
-                                  type="tel"
+                                  type="number"
                                   class="form-control"
                                   placeholder="Pincode"
                                   name="pincode"
+                                  maxlength="6"
                                   />
                                   <p id="pincode_error"></p>
                               </div>
@@ -337,7 +374,86 @@
                 </section>
                 <hr/>
               </div>
-        
+
+<script type="text/javascript">
+
+function sendOtp(){
+    //  document.getElementById('send_otp').style.visibility = "hidden";
+    // document.getElementById('verify').style.visibility = "visible";
+    let email = document.getElementById('email').value;
+    console.log(email);
+    	$.ajax({
+	      type: "POST",
+	      url: '{{route('send_otp')}}',
+	      datatype: 'json',
+	      data: {
+		        "_token": "{{ csrf_token() }}",
+		        "email": email,
+	        },
+	      success: function (data) {
+          if(data == 1){
+            alert("OTP Sent Succesfully");
+            document.getElementById('send_otp').style.visibility = "hidden";
+            document.getElementById('verify').style.visibility = "visible";
+          }
+          else{
+            alert("OTP not Sent.Please check your EmailId");
+          }
+			  
+	      },
+	      complete: function () {
+	      },
+	      error: function () {
+	      }
+	  });
+  }
+
+  function verify_email(){
+    //  document.getElementById('send_otp').style.visibility = "hidden";
+    // document.getElementById('verify').style.visibility = "visible";
+    let email = document.getElementById('email').value;
+    let otp = document.getElementById('otp').value;
+
+    	$.ajax({
+	      type: "POST",
+	      url: '{{route('verify_email')}}',
+	      datatype: 'json',
+	      data: {
+		        "_token": "{{ csrf_token() }}",
+		        "email": email,
+            "otp": otp,
+	        },
+	      success: function (data) {
+         if(data == 1){
+            document.getElementById('check').style.visibility = "visible";
+          }
+          else{
+            alert("Invalid OTP.Try again...");
+          }
+			  
+	      },
+	      complete: function () {
+	      },
+	      error: function () {
+	      }
+	  });
+  }
+
+  function calc()
+{
+  if (document.getElementById('verify_later').checked) 
+  {
+      document.getElementById('otp').style.visibility = "hidden";
+      document.getElementById('send_otp').style.visibility = "hidden";
+      document.getElementById('verify').style.visibility = "hidden";
+    }
+    else{
+      document.getElementById('otp').style.visibility = "visible";
+      document.getElementById('send_otp').style.visibility = "visible";
+    } 
+}
+
+</script>
               <div id="step4" style="display: none;">
                 <section>
                   <div class="form">
@@ -356,13 +472,13 @@
                           <div class="row mb-3">
                             <div class="col-lg-4"> Pan </div>
                             <div class="col-lg-8">
-                              : <span id="put_pan"></span>
+                              <input type="text" id="put_pan" name="pan" maxlength="2">
                             </div>
                           </div>
                           <div class="row mb-3">
                             <div class="col-lg-4"> Name </div>
                             <div class="col-lg-8">
-                              : <span id="put_name"></span>
+                              <input type="text" id="put_name" name="pan" maxlength="2">
                             </div>
                           </div>
                           <div class="row mb-3">
@@ -476,4 +592,10 @@
           </div>
         
         </div>
+
+         
         @endsection
+
+
+
+  

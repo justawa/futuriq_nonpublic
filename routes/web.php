@@ -46,6 +46,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('enrolment/all_list', 'EnrolmentController@getAllEnrolment')->name('enrolment.all_list');
     Route::get('enrolment/change_status/{type}/{application_id}/{status}', 'EnrolmentController@change_status')->name('enrolment.change_status');
     Route::get('adminhtml/dashboard_dsc', 'EnrolmentController@getDashboard_dsc')->name('adminhtml.dashboard_dsc');
+    Route::post('/send_otp', 'EnrolmentController@send_otp')->name('send_otp');
+    Route::post('/verify_email', 'EnrolmentController@verify_email')->name('verify_email');
+
+
 
 
     //partner

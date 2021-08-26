@@ -149,9 +149,9 @@ mytime=setTimeout('display_ct()',refresh)
 
 function display_ct() {
 var x = new Date()
-// var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getFullYear(); 
-// x1 = x1 + " - " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds();
-var x1=x.toUTCString();// changing the display to UTC string
+var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getFullYear(); 
+x1 = x1 + " - " +  x.getHours( )+ ":" +  x.getMinutes() + ":" +  x.getSeconds();
+// var x1=x.toUTCString();// changing the display to UTC string
 console.log(x1);
 document.getElementById('topText').innerHTML = x1;
 display_c();

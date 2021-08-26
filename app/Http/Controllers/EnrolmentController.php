@@ -7,7 +7,10 @@ use App\Http\Requests\EnrolmentRequest;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Storage;
 use App\Enrolment;
+use Illuminate\Support\Facades\Mail;
 use DOMPDF;
+use App\Mail\sendOtp;
+
 
 class EnrolmentController extends Controller
 {
@@ -19,6 +22,7 @@ class EnrolmentController extends Controller
 
     public function store(EnrolmentRequest $request)
     {
+        dd($request);
         $photoPath = '';
         $panPath = '';
         $addressPath = '';
@@ -224,5 +228,60 @@ class EnrolmentController extends Controller
     //   // Finally, you can download the file using download function
     //   return $pdf->download('customers.pdf');
     // }
+
+      public function ind(Request $request)
+    {
+          return view('saurav.ind');
+    }
+
+     public function send_otp(Request $request){
+        $user = Enrolment::where([
+            'email' => $request->email
+                    ])->count();
+     
+        if($user){
+
+            $userC = Enrolment::where([
+            'email' => $request->email
+                    ])->first();
+
+              $otp = rand(4000,9000);
+            
+
+           // $otp = rand(4000,9000);
+
+            $userC->otp = $otp;
+            $userC->save();
+            $mail_details = [
+            'subject' => 'Testing Application OTP',
+            'body' => 'Your OTP is : '. $otp
+        ];
+            Mail::to($request->email)->send(new sendOtp($otp));
+        
+        return 1;
+    }
+    else{
+           return 0;
+    }
+
+}
+
+    public function verify_email(Request $request){
+        $user = Enrolment::where([
+            'email' => $request->email,
+            'otp' => $request->otp
+          ])->first();
+
+          if($user){
+              $user->email_verified = 1;
+              $user->save();
+              Enrolment::where('email','=',$request->email)->update(['otp' => null]);
+
+              return 1;
+          }
+          else{
+              return 0;
+          }
+    }
   
 }
